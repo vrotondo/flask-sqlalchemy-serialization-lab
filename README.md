@@ -19,6 +19,11 @@ By the end of this lab, you should have a fully relational database and be
 able to serialize complex, nested relationships between customers, items, 
 and reviews without errors.
 
+## Tools & Resources
+
+- [GitHub Repo](https://github.com/learn-co-curriculum/flask-sqlalchemy-serialization-lab)
+- [Marshmallow Documentation](https://marshmallow.readthedocs.io/en/stable/)
+
 ## Setup
 
 Fork and clone the lab repo.
