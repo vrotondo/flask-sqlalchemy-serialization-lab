@@ -1,12 +1,6 @@
 # Flask-SQLAlchemy Lab 2
 
-## Learning Goals
-
-- Use Flask-SQLAlchemy to define a data model with relationships
-- Implement an association proxy for a model
-- Use SQLAlchemy-Serializer to serialize an object with relationships
-
----
+## Scenario
 
 ## Setup
 
@@ -45,7 +39,7 @@ $ flask db upgrade head
 
 #### Step 1: Add Review and relationships with Customer and Item
 
-![customer review item erd](https://curriculum-content.s3.amazonaws.com/7159/python-p4-v2-flask-sqlalchemy/sqlalchemy_lab_2_erd.png)
+![customer review item erd](/assets/sqlalchemy_lab_2_erd.png)
 
 A customer can review an item that they purchased.
 
@@ -145,11 +139,13 @@ $ pytest testing/association_proxy_test.py
 #### Step 3: Add Serialization
 
 - Add schemas for `Customer`, `Item`, and `Reviews`.
+- Schemas should serialize all columns including id, excepting any foreign keys.
+- Use `fields.Nested` to include relationships.
 - Add serialization rules to avoid errors involving recursion depth (be careful
   about tuple commas).
-  - `Customer` should exclude `reviews.customer`
-  - `Item` should exclude `reviews.item`
-  - `Review` should exclude `customer.reviews` and `item.reviews`
+  - Customer(s) should exclude `items` and `reviews`
+  - Item(s) should exclude `reviews` and `customers`
+  - Review(s) should exclude `item` and `customer`
 
 #### Step 4: Test and Refine Code
 
