@@ -35,7 +35,15 @@ $ flask db migrate -m "initial migration"
 $ flask db upgrade head
 ```
 
-## Task#1 : Add Review and relationships with Customer and Item
+## Instructions
+
+### Task 1: Define the Problem
+
+### Task 2: Determine the Design
+
+### Task 3: Develop, Test, and Refine the Code
+
+#### Step 1: Add Review and relationships with Customer and Item
 
 ![customer review item erd](https://curriculum-content.s3.amazonaws.com/7159/python-p4-v2-flask-sqlalchemy/sqlalchemy_lab_2_erd.png)
 
@@ -100,7 +108,7 @@ $ python seed.py
 Then use either Flask shell or SQLite Viewer to confirm the 3 tables are
 populated with the seed data.
 
-## Task #2: Add Association Proxy
+#### Step 2: Add Association Proxy
 
 Given a customer, we might want to get a list of items they've reviewed.
 Currently, you would need to iterate through the customer's reviews to get each
@@ -134,14 +142,16 @@ Test the updated `Customer` model and association proxy:
 $ pytest testing/association_proxy_test.py
 ```
 
-## Task #3: Add Serialization
+#### Step 3: Add Serialization
 
-- Edit `Customer`, `Item`, and `Reviews` to inherit from `SerializerMixin`.
+- Add schemas for `Customer`, `Item`, and `Reviews`.
 - Add serialization rules to avoid errors involving recursion depth (be careful
   about tuple commas).
   - `Customer` should exclude `reviews.customer`
   - `Item` should exclude `reviews.item`
   - `Review` should exclude `customer.reviews` and `item.reviews`
+
+#### Step 4: Test and Refine Code
 
 Test the serialized models:
 
@@ -155,6 +165,27 @@ Run all tests to ensure they pass:
 $ pytest
 ```
 
-Once all tests are passing, commit and push your work using `git` to submit.
+#### Step 5: Commit and Push Git History
 
----
+Once all tests are passing, commit and push your work using `git`.
+
+### Task 4: Document and Maintain
+
+Best Practice documentation steps:
+* Add comments to the code to explain purpose and logic, clarifying intent and functionality of your code to other developers.
+* Update README text to reflect the functionality of the application following https://makeareadme.com. 
+  * Add screenshot of completed work included in Markdown in README.
+* Delete any stale branches on GitHub
+* Remove unnecessary/commented out code
+* If needed, update git ignore to remove sensitive data
+
+## Important Submission Note
+
+Before you submit your solution, you need to save your progress with git.
+
+1. Add your changes to the staging area by executing `git add .`.
+2. Create a commit by executing `git commit -m "Your commit message"`.
+3. Push your commits to GitHub by executing `git push origin main`.
+
+CodeGrade will grade your lab using the same tests as are provided in the 
+`testing/` directory.
