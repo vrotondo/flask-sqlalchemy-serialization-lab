@@ -1,6 +1,23 @@
-# Flask-SQLAlchemy Lab 2
+# Lab: Flask-SQLAlchemy Serialization
 
 ## Scenario
+
+You are building a simplified e-commerce backend that manages customers, 
+the items they purchase, and the reviews they leave for products. To ensure 
+your database is well-structured and your application can easily communicate 
+with front-end or external systems, you need to correctly model the 
+relationships between customers, items, and reviews, and then serialize this 
+data into dictionaries or JSON-friendly formats.
+
+To support this, you will need to use:
+* SQLAlchemy models to define relationships and association proxies.
+* Marshmallow schemas to serialize and structure the nested relational data.
+* Recursion handling techniques to prevent infinite loops when serializing 
+  relationships.
+
+By the end of this lab, you should have a fully relational database and be 
+able to serialize complex, nested relationships between customers, items, 
+and reviews without errors.
 
 ## Setup
 
@@ -33,7 +50,47 @@ $ flask db upgrade head
 
 ### Task 1: Define the Problem
 
+Your application currently models customers and items, but there’s 
+no direct way to track reviews that customers leave for the items 
+they purchase. You also cannot yet serialize your data easily to 
+share it via an API.
+
+Specifically, you need to:
+* Create a `Review` model to connect customers and items through their reviews.
+* Allow a customer to access their reviewed items through an association proxy.
+* Serialize models properly using Marshmallow to:
+  * Flatten nested relationships.
+  * Avoid recursion errors.
+  * Control which fields are included or excluded during serialization.
+
+Without solving these problems, it would be difficult to represent customer 
+purchase histories, reviews, and item popularity in a structured, API-ready 
+way.
+
 ### Task 2: Determine the Design
+
+To solve this, the design will follow these steps:
+
+1. Database Model Updates:
+  * Create a `Review` model as a join table with `comment`, `customer_id`, and `item_id`.
+  * Establish proper `back_populates` relationships between `Customer`, `Item`, and `Review`.
+  * Add an association proxy to the `Customer` model so customers can easily access their items via reviews.
+
+2. Serialization Strategy:
+  * Create Marshmallow schemas for each model (`CustomerSchema`, `ItemSchema`, `ReviewSchema`).
+  * Use `fields.Nested` to serialize relationships between models.
+  * Exclude fields that could cause circular recursion:
+    * In `CustomerSchema`, exclude items and reviews from nested outputs.
+    * In `ItemSchema`, exclude reviews and customers from nested outputs.
+    * In `ReviewSchema`, exclude item and customer from nested outputs.
+
+3. Testing:
+  * Create and seed the database with initial customers, items, and reviews.
+  * Verify relationships using Flask shell.
+  * Run unit tests to validate model relationships, association proxies, and serialization outputs.
+
+Following this structure will ensure your data models are complete, your 
+serialization is correct, and your application is robust against recursion errors.
 
 ### Task 3: Develop, Test, and Refine the Code
 
